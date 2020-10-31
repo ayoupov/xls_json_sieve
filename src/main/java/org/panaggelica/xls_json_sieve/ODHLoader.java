@@ -18,7 +18,11 @@ import java.util.List;
 @Data
 public class ODHLoader {
 
-    ODHModel model;
+    static ODHModel model;
+
+    public static ODHModel getModel() {
+        return model;
+    }
 
     @SneakyThrows
     @PostConstruct

@@ -6,9 +6,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.panaggelica.xls_json_sieve.ODHLoader;
 import org.panaggelica.xls_json_sieve.model.MatchResponse;
 import org.panaggelica.xls_json_sieve.model.XLSModel;
 import org.panaggelica.xls_json_sieve.model.XLSObjectDescriptor;
+import org.panaggelica.xls_json_sieve.processors.SieveProcessor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,8 @@ public class MainController {
     int TO_CELL = 3;
     int DISTRICT_CELL = 4;
 
+    private SieveProcessor sieve;
+
     @SneakyThrows
     @PostMapping(path = "/xls", produces = MediaType.APPLICATION_JSON_VALUE)
     public MatchResponse match(@RequestParam("file") MultipartFile file) throws IOException {
@@ -48,7 +52,8 @@ public class MainController {
         model.setObjects(descriptors);
         model.filter();
         model.list();
-        return null;
+        MatchResponse response = sieve.process(ODHLoader.getModel(), model);
+        return response;
     }
 
     private XLSObjectDescriptor getNext(Sheet sheet, int i) {
