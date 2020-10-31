@@ -41,7 +41,7 @@ public class MainController {
         XLSObjectDescriptor descriptor;
         XLSModel model = new XLSModel();
         while ((descriptor = getNext(sheet, i)) != null) {
-            log.info("descriptor: {}", descriptor);
+//            log.info("descriptor: {}", descriptor);
             descriptors.add(descriptor);
             i++;
         }

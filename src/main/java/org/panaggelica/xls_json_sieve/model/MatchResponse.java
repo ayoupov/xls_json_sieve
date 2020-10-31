@@ -4,4 +4,7 @@ import lombok.Data;
 
 @Data
 public class MatchResponse {
+    String xlsName;
+    String odhName;
+    long objectId;
 }
