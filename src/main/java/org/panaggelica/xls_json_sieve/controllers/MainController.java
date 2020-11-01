@@ -8,9 +8,11 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.panaggelica.xls_json_sieve.ODHLoader;
 import org.panaggelica.xls_json_sieve.model.MatchResponse;
+import org.panaggelica.xls_json_sieve.model.ODHModel;
 import org.panaggelica.xls_json_sieve.model.XLSModel;
 import org.panaggelica.xls_json_sieve.model.XLSObjectDescriptor;
 import org.panaggelica.xls_json_sieve.processors.SieveProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +35,12 @@ public class MainController {
     int TO_CELL = 3;
     int DISTRICT_CELL = 4;
 
+    @Autowired
     private SieveProcessor sieve;
 
     @SneakyThrows
     @PostMapping(path = "/xls", produces = MediaType.APPLICATION_JSON_VALUE)
-    public MatchResponse match(@RequestParam("file") MultipartFile file) throws IOException {
+    public List<MatchResponse> match(@RequestParam("file") MultipartFile file) throws IOException {
         final Workbook sheets = WorkbookFactory.create(file.getInputStream());
         final Sheet sheet = sheets.getSheetAt(0);
         int i = START_ROW;
@@ -52,7 +55,10 @@ public class MainController {
         model.setObjects(descriptors);
         model.filter();
         model.list();
-        MatchResponse response = sieve.process(ODHLoader.getModel(), model);
+        final ODHModel oModel = ODHLoader.getModel();
+        List<MatchResponse> response = sieve.process(oModel, model);
+
+        log.info("{} entries left unmatched", model.getObjects().size());
         return response;
     }
 
