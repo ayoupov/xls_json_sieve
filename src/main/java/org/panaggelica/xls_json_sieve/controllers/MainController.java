@@ -60,6 +60,9 @@ public class MainController {
 
         final int left = model.getObjects().size();
         log.info("{} ({}%) entries left unmatched", left, left * 100.0 / total);
+        //373 (32.23854796888505%) entries left unmatched
+        //340 (29.386343993085568%) entries left unmatched
+        //289 (24.978392394122732%) entries left unmatched
 
         // fixme: clone ODHModel
         ODHLoader.loadODH();

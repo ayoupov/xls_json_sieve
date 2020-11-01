@@ -7,12 +7,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SwapMatchSieveLayer extends AbstractSieveLayer{
+public class SwapMatchSieveLayer extends AbstractSieveLayer {
+
+    private String cleanNoSpaces(String s) {
+        return s.toLowerCase()
+                .replaceAll("ул\\.", "")
+                .replaceAll("улица", "")
+                .replaceAll("[,\\.»«\"']", " ");
+    }
 
     @Override
     public boolean toss(ODHObjectDescriptor o, XLSObjectDescriptor x) {
-        Set<String> oSet = new HashSet<>(List.of(o.getName().toLowerCase().split("\\s,\\.")));
-        Set<String> xSet = new HashSet<>(List.of(x.getObjectName().toLowerCase().split("\\s,\\.")));
+        Set<String> oSet = new HashSet<>(List.of(
+                cleanNoSpaces(o.getName()).split("\\s+"))
+        );
+        Set<String> xSet = new HashSet<>(List.of(
+                cleanNoSpaces(x.getObjectName()).toLowerCase().split("\\s+"))
+        );
         oSet.removeAll(xSet);
         return oSet.isEmpty();
     }

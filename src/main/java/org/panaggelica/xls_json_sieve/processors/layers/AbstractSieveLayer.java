@@ -12,7 +12,9 @@ public abstract class AbstractSieveLayer implements SieveLayer {
 
 
     protected static String clean(String s) {
-        return s.toLowerCase().replaceAll("\\s,\\.", "");
+        return s.toLowerCase().replaceAll("ул\\.", "")
+                .replaceAll("улица","")
+                .replaceAll("[\\s,\\.»«\"']", "");
     }
 
     private final List<ODHObjectDescriptor> oMatched = new ArrayList<>();
@@ -24,7 +26,7 @@ public abstract class AbstractSieveLayer implements SieveLayer {
 
         List<ODHObjectDescriptor> os = new ArrayList<>(odh.getObjects());
         List<XLSObjectDescriptor> xs = new ArrayList<>(xls.getObjects());
-        log.info("unmatched {} to {}", xs.size(), os.size());
+        log.info("unmatched {} from {}", xs.size(), os.size());
 
         for (XLSObjectDescriptor x : xs) {
             final List<ODHObjectDescriptor> collected =
