@@ -56,9 +56,11 @@ public class MainController {
         model.filter();
         model.list();
         final ODHModel oModel = ODHLoader.getModel();
+        final int total = descriptors.size();
         List<MatchResponse> response = sieve.process(oModel, model);
 
-        log.info("{} entries left unmatched", model.getObjects().size());
+        final int left = model.getObjects().size();
+        log.info("{} ({}) entries left unmatched", left, left * 1f / total);
         return response;
     }
 
