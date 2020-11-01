@@ -11,14 +11,14 @@ public class SwapMatchSieveLayer extends AbstractSieveLayer{
 
     @Override
     public boolean toss(ODHObjectDescriptor o, XLSObjectDescriptor x) {
-        Set<String> oSet = new HashSet<>(List.of(o.getName().toLowerCase().split("\\s+")));
-        Set<String> xSet = new HashSet<>(List.of(x.getObjectName().toLowerCase().split("\\s+")));
+        Set<String> oSet = new HashSet<>(List.of(o.getName().toLowerCase().split("\\s,\\.")));
+        Set<String> xSet = new HashSet<>(List.of(x.getObjectName().toLowerCase().split("\\s,\\.")));
         oSet.removeAll(xSet);
         return oSet.isEmpty();
     }
 
     @Override
     public String reason() {
-        return "Swapped words";
+        return "swapped words";
     }
 }

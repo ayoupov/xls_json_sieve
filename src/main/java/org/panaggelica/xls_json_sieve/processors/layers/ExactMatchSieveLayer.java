@@ -11,6 +11,6 @@ public class ExactMatchSieveLayer extends AbstractSieveLayer {
 
     @Override
     public String reason() {
-        return "Full match";
+        return "full match";
     }
 }

@@ -12,7 +12,7 @@ public abstract class AbstractSieveLayer implements SieveLayer {
 
 
     protected static String clean(String s) {
-        return s.toLowerCase().replaceAll("\\s", "");
+        return s.toLowerCase().replaceAll("\\s,\\.", "");
     }
 
     private final List<ODHObjectDescriptor> oMatched = new ArrayList<>();
@@ -37,7 +37,7 @@ public abstract class AbstractSieveLayer implements SieveLayer {
             }
         }
 
-        log.info("matched {} entries because of {}", xMatched.size(), reason());
+        log.info("matched {} entries, {}", xMatched.size(), reason());
 
         os.removeAll(oMatched);
         odh.setObjects(os);

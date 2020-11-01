@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Slf4j
-public class ODHModel {
+public class ODHModel{
 
     List<ODHObjectDescriptor> objects;
 

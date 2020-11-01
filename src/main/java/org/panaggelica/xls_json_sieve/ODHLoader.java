@@ -28,7 +28,7 @@ public class ODHLoader {
 
     @SneakyThrows
     @PostConstruct
-    private void loadODH() {
+    public static void loadODH() {
         final InputStream odh = Thread.currentThread().getContextClassLoader().getResourceAsStream("odh20200928");
 
         List<ODHObjectDescriptor> objects = new ArrayList<>();

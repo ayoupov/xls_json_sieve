@@ -48,7 +48,6 @@ public class MainController {
         XLSObjectDescriptor descriptor;
         XLSModel model = new XLSModel();
         while ((descriptor = getNext(sheet, i)) != null) {
-//            log.info("descriptor: {}", descriptor);
             descriptors.add(descriptor);
             i++;
         }
@@ -60,7 +59,11 @@ public class MainController {
         List<MatchResponse> response = sieve.process(oModel, model);
 
         final int left = model.getObjects().size();
-        log.info("{} ({}) entries left unmatched", left, left * 1f / total);
+        log.info("{} ({}%) entries left unmatched", left, left * 100.0 / total);
+
+        // fixme: clone ODHModel
+        ODHLoader.loadODH();
+
         return response;
     }
 
